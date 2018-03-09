@@ -25,7 +25,8 @@ data Instr = Add {- (a b -- a + b) -}
 
 step :: State -> Instr -> State
 step (pc, l:r:stack) Add = (pc+1, l+r : stack)
-step (pc, stack) (Push i) = (pc+1, i : stack)
+step (pc, stack) (Push i) = (pc+1, i:stack)
+step (pc, l:r:stack) Swap = (pc+1, r:l:stack)
 
 run :: [Instr] -> State -> State
 run [] s = s
