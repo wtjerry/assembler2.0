@@ -23,8 +23,17 @@ data Instr = Add {- (a b -- a + b) -}
            | Load {- (addr -- mem[addr]) -}
            | Done deriving (Eq, Show)
 
+int2Bool :: Int -> Bool
+int2Bool 0 = False
+int2Bool _ = True
+
+bool2Int :: Bool -> Int
+bool2Int False = 0
+bool2Int True = 1 
+
 step :: State -> Instr -> State
 step (pc, l:r:stack) Add = (pc+1, l+r : stack)
+step (pc, l:r:stack) Eq = (pc+1, bool2Int (l==r) : stack)
 step (pc, stack) (Push i) = (pc+1, i:stack)
 step (pc, l:r:stack) Swap = (pc+1, r:l:stack)
 
