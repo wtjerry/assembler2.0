@@ -33,6 +33,7 @@ bool2Int True = 1
 
 step :: State -> Instr -> State
 step (pc, l:r:stack) Add = (pc+1, l+r : stack)
+step (pc, l:r:stack) And = (pc+1, bool2Int ((int2Bool l) && (int2Bool r)) : stack)
 step (pc, l:r:stack) Eq = (pc+1, bool2Int (l==r) : stack)
 step (pc, stack) (Push i) = (pc+1, i:stack)
 step (pc, l:r:stack) Swap = (pc+1, r:l:stack)
